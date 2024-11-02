@@ -168,6 +168,17 @@ public class RNBluetoothManagerModule extends ReactContextBaseJavaModule
     }
 
     @ReactMethod
+    public void stopScan(final Promise promise) {
+        BluetoothAdapter adapter = this.getBluetoothAdapter();
+        if (adapter == null) {
+            promise.reject(EVENT_BLUETOOTH_NOT_SUPPORT);
+        }
+        else if (adapter.isDiscovering()) {
+            adapter.cancelDiscovery();
+        }
+    }
+
+    @ReactMethod
     public void scanDevices(final Promise promise) {
         BluetoothAdapter adapter = this.getBluetoothAdapter();
         if(adapter == null){
